@@ -308,9 +308,9 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 70vh;
     text-align: center;
-    gap: 18px;
+    gap: 12px;
+    padding-top: 20px;
   }
   .home-hero .big-heart {
     font-size: 64px;
@@ -319,7 +319,7 @@
   }
   .home-hero h1 {
     font-family: 'Playfair Display', serif;
-    font-size: 52px;
+    font-size: 40px;
     font-weight: 400;
     line-height: 1.15;
     color: var(--dark);
@@ -461,7 +461,14 @@
     display: flex;
     flex-direction: column;
     gap: 28px;
+    overflow-y: auto;
+    max-height: calc(100vh - 160px);
+    padding-right: 12px;
+    padding-bottom: 20px;
   }
+  .poem-container::-webkit-scrollbar { width: 4px; }
+  .poem-container::-webkit-scrollbar-track { background: transparent; }
+  .poem-container::-webkit-scrollbar-thumb { background: var(--blush); border-radius: 99px; }
   /* Side-by-side poem card with photo */
   .poem-row {
     display: flex;
@@ -470,12 +477,14 @@
   }
   .poem-row.reverse { flex-direction: row-reverse; }
   .poem-photo {
-    width: 200px;
+    width: 260px;
     flex-shrink: 0;
     border-radius: 20px;
     object-fit: cover;
-    box-shadow: 0 8px 28px var(--shadow);
+    object-position: center;
+    box-shadow: 0 12px 36px var(--shadow);
     display: block;
+    min-height: 320px;
   }
   .poem-row .glass.poem-card { flex: 1; }
   .poem-card {
@@ -586,21 +595,6 @@
     display: flex;
   }
 
-  /* Animated ambient background that reacts to photo colour */
-  .gallery-bg {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    transition: background 1.2s ease;
-    background: linear-gradient(160deg, var(--beige), #e8d8f8);
-  }
-  .gallery-bg::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    backdrop-filter: blur(0px);
-    background: rgba(255,255,255,0.18);
-  }
 
   /* Header area */
   .gallery-header {
@@ -665,8 +659,8 @@
   .gallery-card {
     scroll-snap-align: center;
     flex-shrink: 0;
-    width: 340px;
-    height: 420px;
+    width: 480px;
+    height: 580px;
     border-radius: 24px;
     position: relative;
     overflow: hidden;
@@ -1196,14 +1190,117 @@
   /* Home hero image */
   .home-hero-img {
     width: 100%;
-    max-width: 700px;
-    height: 260px;
+    max-width: 900px;
+    height: calc(100vh - 320px);
+    min-height: 420px;
     object-fit: cover;
-    border-radius: 20px;
-    margin-top: 12px;
-    box-shadow: 0 12px 40px var(--shadow);
+    border-radius: 24px;
+    margin-top: 28px;
+    box-shadow: 0 20px 60px var(--shadow);
     display: block;
   }
+
+  /* ── Star Wars intro crawl ── */
+  #swCrawl {
+    position: absolute;
+    inset: 0;
+    z-index: 30;
+    background: #000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    overflow: hidden;
+    perspective: 400px;
+  }
+  #swCrawl.hidden { display: none; }
+
+  .crawl-logo {
+    position: absolute;
+    top: 18%;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: #f4c542;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    opacity: 0;
+    animation: crawlLogoFade 2s ease 0.5s forwards;
+    text-shadow: 0 0 20px rgba(244,197,66,0.7);
+    text-align: center;
+  }
+  @keyframes crawlLogoFade {
+    0%   { opacity: 0; transform: scale(1.6); }
+    40%  { opacity: 1; transform: scale(1); }
+    80%  { opacity: 1; }
+    100% { opacity: 0; transform: scale(0.4); }
+  }
+
+  .crawl-wrap {
+    width: 56%;
+    max-width: 520px;
+    transform-origin: 50% 100%;
+    transform: rotateX(28deg);
+    animation: crawlScroll 18s linear 2.8s forwards;
+    padding-bottom: 40px;
+    opacity: 0;
+  }
+  @keyframes crawlScroll {
+    0%   { opacity: 1; transform: rotateX(28deg) translateY(100%); }
+    5%   { opacity: 1; }
+    90%  { opacity: 1; }
+    100% { opacity: 0; transform: rotateX(28deg) translateY(-320%); }
+  }
+
+  .crawl-episode {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: #f4c542;
+    text-align: center;
+    letter-spacing: 0.2em;
+    margin-bottom: 18px;
+    text-transform: uppercase;
+  }
+  .crawl-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: #f4c542;
+    text-align: center;
+    line-height: 1.3;
+    margin-bottom: 36px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .crawl-body {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: #f4c542;
+    text-align: justify;
+    line-height: 1.75;
+    letter-spacing: 0.04em;
+  }
+
+  .crawl-skip {
+    position: absolute;
+    bottom: 22px;
+    right: 28px;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 12px;
+    color: rgba(244,197,66,0.45);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    border: 1px solid rgba(244,197,66,0.2);
+    padding: 6px 14px;
+    border-radius: 3px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .crawl-skip:hover { color: rgba(244,197,66,0.8); border-color: rgba(244,197,66,0.5); }
+
+  #page-poem { overflow: hidden; }
 
   /* Scrollbar */
   .main::-webkit-scrollbar { width: 5px; }
@@ -1261,9 +1358,6 @@
   </button>
   <button class="nav-btn" onclick="showPage('gallery', this)">
     <span class="icon">📷</span><span class="label">Our Photos</span>
-  </button>
-  <button class="nav-btn" onclick="showPage('reasons', this)">
-    <span class="icon">♡</span><span class="label">Why I Love You</span>
   </button>
   <button class="nav-btn" onclick="showPage('game', this)">
     <span class="icon">🎮</span><span class="label">Vzizzle's Game</span>
@@ -1422,7 +1516,6 @@
 
   <!-- GALLERY -->
   <div id="page-gallery" class="page">
-    <div class="gallery-bg" id="galleryBg"></div>
     <div class="gallery-header">
       <h2 class="page-title">Our Photos</h2>
       <p class="page-subtitle">Moments I never want to forget</p>
@@ -1438,69 +1531,6 @@
   </div>
 
   <!-- REASONS -->
-  <div id="page-reasons" class="page">
-    <h2 class="page-title">Why I Love You</h2>
-    <p class="page-subtitle">A list that could never be complete</p>
-    <div class="reasons-list">
-      <div class="glass reason-card">
-        <div class="reason-num">01</div>
-        <div class="reason-text">
-          <h4>The way you make ordinary things special</h4>
-          <p>A grocery run, a quiet evening, a Tuesday — everything feels different with you in it.</p>
-        </div>
-      </div>
-      <div class="glass reason-card">
-        <div class="reason-num">02</div>
-        <div class="reason-text">
-          <h4>How you listen</h4>
-          <p>Not just with your ears — with your whole self. I always feel heard by you.</p>
-        </div>
-      </div>
-      <div class="glass reason-card">
-        <div class="reason-num">03</div>
-        <div class="reason-text">
-          <h4>Your laugh</h4>
-          <p>It's the kind that makes me want to be funnier than I am, just to hear it again.</p>
-        </div>
-      </div>
-      <div class="glass reason-card">
-        <div class="reason-num">04</div>
-        <div class="reason-text">
-          <h4>How you care for the people you love</h4>
-          <p>The quiet ways you show up — you don't make a show of it. You just do it.</p>
-        </div>
-      </div>
-      <div class="glass reason-card">
-        <div class="reason-num">05</div>
-        <div class="reason-text">
-          <h4>The way you see the world</h4>
-          <p>You notice things I'd walk past. You've made me pay more attention.</p>
-        </div>
-      </div>
-      <div class="glass reason-card">
-        <div class="reason-num">06</div>
-        <div class="reason-text">
-          <h4>How safe you make me feel</h4>
-          <p>Around you, I don't have to perform or explain. I can just be.</p>
-        </div>
-      </div>
-      <div class="glass reason-card">
-        <div class="reason-num">07</div>
-        <div class="reason-text">
-          <h4>Your softness and your strength</h4>
-          <p>You hold both at once — gently firm, quietly brave. It amazes me.</p>
-        </div>
-      </div>
-      <div class="glass reason-card">
-        <div class="reason-num">08</div>
-        <div class="reason-text">
-          <h4>That you chose me</h4>
-          <p>Out of everything — you chose this. I don't take that lightly, not for a second.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <!-- GAME -->
   <div id="page-game" class="page">
     <div class="game-wrap">
@@ -1537,13 +1567,31 @@
           <img id="avatarSprite" class="avatar-sprite"
                src="photos/vzizzle.jpg"
                alt="Vzizzle"
-               style="width:110px; height:160px; object-fit:cover; object-position:top; border-radius:16px; border:2px solid rgba(180,127,212,0.5);"/>
+               style="width:160px; height:240px; object-fit:cover; object-position:top; border-radius:20px; border:2px solid rgba(180,127,212,0.5);"/>
         </div>
         <!-- 8×8 grid -->
         <div class="game-grid" id="gameGrid"></div>
       </div>
 
     </div><!-- /game-wrap -->
+
+    <!-- Star Wars intro crawl — first play only -->
+    <div id="swCrawl">
+      <div class="crawl-logo">A long time ago, in a galaxy not so far away...</div>
+      <div class="crawl-wrap">
+        <div class="crawl-episode">Episode I</div>
+        <div class="crawl-title">Commander<br>Vzizzle</div>
+        <div class="crawl-body">
+          The alien forces have emerged from the outer rim, flooding the galaxy with waves of coloured energy rings — green, red, blue, and yellow — each one a weapon in their arsenal of chaos.<br><br>
+          Planets tremble. Stars flicker. Hope fades.<br><br>
+          But one commander stands between civilisation and total annihilation. Armed with her blaster and an unmatched aim, COMMANDER VZIZZLE has been called to the front line.<br><br>
+          Her mission: identify the target colour, blast every matching ring from the sky, and hold the line for 45 seconds — before the next wave begins.<br><br>
+          The galaxy is counting on her. It always does.<br><br>
+          May the Force be with you, Commander. 🌟
+        </div>
+      </div>
+      <div class="crawl-skip" onclick="skipCrawl()">SKIP ▶</div>
+    </div>
 
     <!-- Start/End overlay -->
     <div class="game-overlay" id="gameOverlay">
@@ -1642,37 +1690,6 @@
   let currentCard = 0;
   const TOTAL = galleryPhotos.length;
 
-  // Extract dominant colour from an image element via canvas
-  function getDominantColour(img) {
-    try {
-      const canvas = document.createElement('canvas');
-      const size = 60;
-      canvas.width = canvas.height = size;
-      const ctx = canvas.getContext('2d');
-      ctx.drawImage(img, 0, 0, size, size);
-      const data = ctx.getImageData(0, 0, size, size).data;
-      let r = 0, g = 0, b = 0, count = 0;
-      for (let i = 0; i < data.length; i += 16) {
-        const pr = data[i], pg = data[i+1], pb = data[i+2];
-        const brightness = (pr + pg + pb) / 3;
-        if (brightness > 240 || brightness < 20) continue;
-        r += pr; g += pg; b += pb; count++;
-      }
-      if (count === 0) return null;
-      r = Math.round(r * 0.55 + 245 * 0.45);
-      g = Math.round(g * 0.55 + 240 * 0.45);
-      b = Math.round(b * 0.55 + 252 * 0.45);
-      return `rgb(${Math.round(r/count*0.55+245*0.45)},${Math.round(g/count*0.55+240*0.45)},${Math.round(b/count*0.55+252*0.45)})`;
-    } catch(e) { return null; }
-  }
-
-  function updateGalleryBg(colour) {
-    const bg = document.getElementById('galleryBg');
-    bg.style.background = colour
-      ? `linear-gradient(160deg, ${colour}, #e8d8f8)`
-      : `linear-gradient(160deg, var(--beige), #e8d8f8)`;
-  }
-
   function buildGallery() {
     const track = document.getElementById('galleryTrack');
     const dotsEl = document.getElementById('galleryDots');
@@ -1687,7 +1704,6 @@
       const img = document.createElement('img');
       img.src = src;
       img.alt = caption;
-      img.crossOrigin = 'anonymous';
       card.appendChild(img);
 
       const overlay = document.createElement('div');
@@ -1729,22 +1745,9 @@
     const cards = track.querySelectorAll('.gallery-card');
     const dots = document.getElementById('galleryDots').querySelectorAll('.gallery-dot');
     const counter = document.getElementById('galleryCounter');
-
     cards.forEach((c, i) => c.classList.toggle('active-card', i === idx));
     dots.forEach((d, i) => d.classList.toggle('active', i === idx));
     counter.textContent = `${idx + 1} / ${TOTAL}`;
-
-    // Extract colour from active photo
-    const img = cards[idx] ? cards[idx].querySelector('img') : null;
-    if (img) {
-      if (img.complete && img.naturalWidth) {
-        updateGalleryBg(getDominantColour(img));
-      } else {
-        img.onload = () => updateGalleryBg(getDominantColour(img));
-      }
-    } else {
-      updateGalleryBg(null);
-    }
   }
 
   function scrollToCard(idx) {
@@ -1782,7 +1785,7 @@
   const COLOUR_HEX = { green:'#2ecc40', red:'#ff4136', blue:'#0074d9', yellow:'#f4c542' };
   const ROUND_TIME = 45;
   const GRID_SIZE = 64;
-  const SPAWN_INTERVAL = 800; // ms between new rings lighting up
+  const SPAWN_INTERVAL = 800;
 
   let gameActive = false;
   let score = 0;
@@ -1791,7 +1794,30 @@
   let timeLeft = ROUND_TIME;
   let timerInterval = null;
   let spawnInterval = null;
-  let ringStates = new Array(GRID_SIZE).fill(null); // null = dark, colour string = lit
+  let ringStates = new Array(GRID_SIZE).fill(null);
+  let firstPlay = true; // crawl only shown once per session
+
+  // ── Star Wars Crawl ──
+  function showCrawl() {
+    const crawl = document.getElementById('swCrawl');
+    crawl.classList.remove('hidden');
+    // Auto-dismiss after crawl animation finishes (~22s total)
+    setTimeout(() => launchGame(), 22000);
+  }
+
+  function skipCrawl() {
+    launchGame();
+  }
+
+  function launchGame() {
+    document.getElementById('swCrawl').classList.add('hidden');
+    // Show the normal start overlay
+    const overlay = document.getElementById('gameOverlay');
+    overlay.classList.remove('hidden');
+    document.getElementById('overlayTitle').innerHTML = "VZIZZLE'S<br>RING BLASTER";
+    document.getElementById('overlaySub').innerHTML = 'shoot rings that match<br>your colour in 45 seconds<br>each round!';
+    document.getElementById('overlayBtn').textContent = '▶ START';
+  }
 
   function buildGrid() {
     const grid = document.getElementById('gameGrid');
@@ -1884,14 +1910,10 @@
     score = 0;
     timeLeft = ROUND_TIME;
     gameActive = true;
-    // Pick random colour
     targetColour = COLOURS[Math.floor(Math.random() * COLOURS.length)];
-    // Clear grid
     buildGrid();
     updateHud();
-    // Hide overlay
     document.getElementById('gameOverlay').classList.add('hidden');
-    // Start timer
     document.getElementById('timerBar').style.width = '100%';
     timerInterval = setInterval(() => {
       timeLeft--;
@@ -1900,7 +1922,6 @@
       document.getElementById('timerBar').style.width = pct + '%';
       if (timeLeft <= 0) endRound();
     }, 1000);
-    // Start spawning rings
     spawnRings();
     spawnInterval = setInterval(spawnRings, SPAWN_INTERVAL);
   }
@@ -1929,7 +1950,21 @@
   // Pre-load hi score display
   updateHud();
   document.getElementById('overlayHi').textContent = hiScore > 0 ? '🏆 HI: ' + String(hiScore).padStart(3,'0') : '';
+  // Hide crawl initially — shown when game tab is first opened
+  document.getElementById('swCrawl').classList.add('hidden');
   buildGrid();
+
+  // Hook into showPage to trigger crawl on first game visit
+  const _origShowPage = showPage;
+  showPage = function(id, btn) {
+    _origShowPage(id, btn);
+    if (id === 'game' && firstPlay) {
+      firstPlay = false;
+      // Hide the normal overlay while crawl plays
+      document.getElementById('gameOverlay').classList.add('hidden');
+      showCrawl();
+    }
+  };
 </script>
 </body>
 </html>
