@@ -707,29 +707,6 @@
     letter-spacing: 0.06em;
   }
 
-  /* Caption overlay on photos */
-  .gallery-card .card-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to top, rgba(30,10,50,0.65) 0%, transparent 55%);
-    border-radius: 24px;
-    display: flex;
-    align-items: flex-end;
-    padding: 24px;
-    opacity: 0;
-    transition: opacity 0.35s ease;
-  }
-  .gallery-card:hover .card-overlay,
-  .gallery-card.active-card .card-overlay { opacity: 1; }
-  .card-caption {
-    font-family: 'Playfair Display', serif;
-    font-style: italic;
-    font-size: 14px;
-    color: white;
-    line-height: 1.5;
-    text-shadow: 0 1px 8px rgba(0,0,0,0.3);
-  }
-
   /* Dot nav indicators */
   .gallery-dots {
     position: relative;
@@ -885,7 +862,7 @@
   /* ── HUD ── */
   .game-hud {
     width: 100%;
-    max-width: 580px;
+    max-width: 680px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -950,7 +927,7 @@
   /* ── Timer ── */
   .timer-wrap {
     width: 100%;
-    max-width: 580px;
+    max-width: 680px;
     display: flex;
     align-items: center;
     gap: 12px;
@@ -1010,9 +987,9 @@
   .game-arena {
     display: flex;
     align-items: flex-end;
-    gap: 20px;
+    gap: 16px;
     width: 100%;
-    max-width: 580px;
+    max-width: 680px;
   }
 
   .avatar-col {
@@ -1020,11 +997,12 @@
     flex-direction: column;
     align-items: center;
     flex-shrink: 0;
+    width: 170px;
   }
 
   /* Smooth SVG anime character */
   .avatar-sprite {
-    width: 110px;
+    width: 100%;
     overflow: visible;
     filter: drop-shadow(0 4px 18px rgba(180,127,212,0.5)) drop-shadow(0 0 6px rgba(120,60,200,0.3));
     transform-origin: center bottom;
@@ -1211,7 +1189,7 @@
     align-items: center;
     justify-content: flex-end;
     overflow: hidden;
-    perspective: 400px;
+    perspective: 500px;
   }
   #swCrawl.hidden { display: none; }
 
@@ -1228,6 +1206,7 @@
     animation: crawlLogoFade 2s ease 0.5s forwards;
     text-shadow: 0 0 20px rgba(244,197,66,0.7);
     text-align: center;
+    z-index: 2;
   }
   @keyframes crawlLogoFade {
     0%   { opacity: 0; transform: scale(1.6); }
@@ -1237,50 +1216,67 @@
   }
 
   .crawl-wrap {
-    width: 56%;
-    max-width: 520px;
+    width: 70%;
+    max-width: 640px;
     transform-origin: 50% 100%;
     transform: rotateX(28deg);
-    animation: crawlScroll 18s linear 2.8s forwards;
+    animation: crawlScroll 13s linear 2.8s forwards;
     padding-bottom: 40px;
     opacity: 0;
   }
   @keyframes crawlScroll {
     0%   { opacity: 1; transform: rotateX(28deg) translateY(100%); }
     5%   { opacity: 1; }
-    90%  { opacity: 1; }
-    100% { opacity: 0; transform: rotateX(28deg) translateY(-320%); }
+    88%  { opacity: 1; }
+    100% { opacity: 0; transform: rotateX(28deg) translateY(-260%); }
+  }
+
+  /* Side-by-side photo + text */
+  .crawl-inner {
+    display: flex;
+    gap: 28px;
+    align-items: flex-start;
+  }
+  .crawl-photo {
+    width: 140px;
+    flex-shrink: 0;
+    border-radius: 12px;
+    object-fit: cover;
+    object-position: top;
+    border: 2px solid rgba(244,197,66,0.4);
+    box-shadow: 0 0 20px rgba(244,197,66,0.2);
+    aspect-ratio: 2/3;
+  }
+  .crawl-text {
+    flex: 1;
   }
 
   .crawl-episode {
     font-family: 'Orbitron', sans-serif;
-    font-size: 14px;
+    font-size: 11px;
     font-weight: 700;
     color: #f4c542;
-    text-align: center;
-    letter-spacing: 0.2em;
-    margin-bottom: 18px;
+    letter-spacing: 0.25em;
+    margin-bottom: 10px;
     text-transform: uppercase;
   }
   .crawl-title {
     font-family: 'Orbitron', sans-serif;
-    font-size: 28px;
+    font-size: 24px;
     font-weight: 700;
     color: #f4c542;
-    text-align: center;
-    line-height: 1.3;
-    margin-bottom: 36px;
+    line-height: 1.25;
+    margin-bottom: 22px;
     text-transform: uppercase;
     letter-spacing: 0.06em;
   }
   .crawl-body {
     font-family: 'Rajdhani', sans-serif;
-    font-size: 20px;
+    font-size: 17px;
     font-weight: 600;
     color: #f4c542;
-    text-align: justify;
     line-height: 1.75;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.03em;
   }
 
   .crawl-skip {
@@ -1297,6 +1293,7 @@
     padding: 6px 14px;
     border-radius: 3px;
     transition: color 0.2s, border-color 0.2s;
+    z-index: 2;
   }
   .crawl-skip:hover { color: rgba(244,197,66,0.8); border-color: rgba(244,197,66,0.5); }
 
@@ -1579,15 +1576,18 @@
     <div id="swCrawl">
       <div class="crawl-logo">A long time ago, in a galaxy not so far away...</div>
       <div class="crawl-wrap">
-        <div class="crawl-episode">Episode I</div>
-        <div class="crawl-title">Commander<br>Vzizzle</div>
-        <div class="crawl-body">
-          The alien forces have emerged from the outer rim, flooding the galaxy with waves of coloured energy rings — green, red, blue, and yellow — each one a weapon in their arsenal of chaos.<br><br>
-          Planets tremble. Stars flicker. Hope fades.<br><br>
-          But one commander stands between civilisation and total annihilation. Armed with her blaster and an unmatched aim, COMMANDER VZIZZLE has been called to the front line.<br><br>
-          Her mission: identify the target colour, blast every matching ring from the sky, and hold the line for 45 seconds — before the next wave begins.<br><br>
-          The galaxy is counting on her. It always does.<br><br>
-          May the Force be with you, Commander. 🌟
+        <div class="crawl-inner">
+          <img src="photos/vzizzlechair.jpg" alt="Commander Vzizzle" class="crawl-photo"/>
+          <div class="crawl-text">
+            <div class="crawl-episode">Episode I</div>
+            <div class="crawl-title">Commander<br>Vzizzle</div>
+            <div class="crawl-body">
+              The aliens are invading.<br><br>
+              Waves of coloured rings flood the galaxy — and only one commander can stop them.<br><br>
+              Armed with her blaster, COMMANDER VZIZZLE must blast every matching ring before time runs out.<br><br>
+              The galaxy is counting on her. 🌟
+            </div>
+          </div>
         </div>
       </div>
       <div class="crawl-skip" onclick="skipCrawl()">SKIP ▶</div>
@@ -1706,14 +1706,6 @@
       img.alt = caption;
       card.appendChild(img);
 
-      const overlay = document.createElement('div');
-      overlay.className = 'card-overlay';
-      const cap = document.createElement('div');
-      cap.className = 'card-caption';
-      cap.textContent = caption;
-      overlay.appendChild(cap);
-      card.appendChild(overlay);
-
       track.appendChild(card);
 
       const dot = document.createElement('div');
@@ -1801,8 +1793,8 @@
   function showCrawl() {
     const crawl = document.getElementById('swCrawl');
     crawl.classList.remove('hidden');
-    // Auto-dismiss after crawl animation finishes (~22s total)
-    setTimeout(() => launchGame(), 22000);
+    // Auto-dismiss after crawl animation finishes (~16s total)
+    setTimeout(() => launchGame(), 16000);
   }
 
   function skipCrawl() {
