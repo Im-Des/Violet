@@ -986,37 +986,53 @@
   /* ── Arena ── */
   .game-arena {
     display: flex;
-    align-items: flex-end;
-    gap: 16px;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
     width: 100%;
     max-width: 680px;
   }
 
   .avatar-col {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
-    flex-shrink: 0;
-    width: 170px;
+    justify-content: flex-start;
+    width: 100%;
+    gap: 16px;
+    padding-left: 4px;
   }
 
-  /* Smooth SVG anime character */
+  .avatar-name-tag {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 11px;
+    color: rgba(180,127,212,0.8);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-shadow: 0 0 8px rgba(180,127,212,0.5);
+  }
+
+  /* Avatar photo */
   .avatar-sprite {
-    width: 100%;
-    overflow: visible;
-    filter: drop-shadow(0 4px 18px rgba(180,127,212,0.5)) drop-shadow(0 0 6px rgba(120,60,200,0.3));
-    transform-origin: center bottom;
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    object-position: top;
+    border-radius: 50%;
+    border: 2px solid rgba(180,127,212,0.6);
+    flex-shrink: 0;
+    filter: drop-shadow(0 0 10px rgba(180,127,212,0.5));
     transition: filter 0.2s;
   }
   .avatar-sprite.shooting {
     animation: animeRecoil 0.35s cubic-bezier(.36,.07,.19,.97);
-    filter: drop-shadow(0 4px 28px rgba(180,127,212,0.9)) drop-shadow(0 0 20px rgba(180,127,212,0.6));
+    filter: drop-shadow(0 0 20px rgba(180,127,212,0.9));
   }
   @keyframes animeRecoil {
-    0%  { transform: translateX(0)    rotate(0deg);   }
-    20% { transform: translateX(-8px) rotate(-3deg);  }
-    50% { transform: translateX(3px)  rotate(1deg);   }
-    100%{ transform: translateX(0)    rotate(0deg);   }
+    0%  { transform: scale(1);    }
+    20% { transform: scale(0.9);  }
+    50% { transform: scale(1.05); }
+    100%{ transform: scale(1);    }
   }
 
   /* ── Ring Grid ── */
@@ -1024,7 +1040,7 @@
     display: grid;
     grid-template-columns: repeat(8, 1fr);
     gap: 6px;
-    flex: 1;
+    width: 100%;
   }
   .ring {
     aspect-ratio: 1;
@@ -1172,8 +1188,11 @@
     height: calc(100vh - 320px);
     min-height: 420px;
     object-fit: cover;
+    object-position: center;
     border-radius: 24px;
     margin-top: 28px;
+    margin-left: auto;
+    margin-right: auto;
     box-shadow: 0 20px 60px var(--shadow);
     display: block;
   }
@@ -1297,6 +1316,42 @@
   }
   .crawl-skip:hover { color: rgba(244,197,66,0.8); border-color: rgba(244,197,66,0.5); }
 
+  /* ─── THANK YOU PAGE ─── */
+  .thankyou-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 70vh;
+    padding: 20px;
+  }
+  .thankyou-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 36px;
+    max-width: 480px;
+    text-align: center;
+  }
+  .ty-heading {
+    font-family: 'Playfair Display', serif;
+    font-size: 42px;
+    font-weight: 400;
+    font-style: italic;
+    color: var(--dark);
+    letter-spacing: 0.02em;
+    margin: 0;
+  }
+  .ty-body {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 400;
+    font-style: italic;
+    color: var(--brown);
+    line-height: 2;
+    margin: 0;
+  }
+
   #page-poem { overflow: hidden; }
 
   /* Scrollbar */
@@ -1348,16 +1403,19 @@
     <span class="icon">🏠</span><span class="label">Home</span>
   </button>
   <button class="nav-btn" onclick="showPage('grid', this)">
-    <span class="icon">✦</span><span class="label">3×3 Grid</span>
+    <span class="icon">✦</span><span class="label">How I See You</span>
   </button>
   <button class="nav-btn" onclick="showPage('poem', this)">
-    <span class="icon">✍️</span><span class="label">A Poem</span>
+    <span class="icon">✍️</span><span class="label">Poetry</span>
   </button>
   <button class="nav-btn" onclick="showPage('gallery', this)">
     <span class="icon">📷</span><span class="label">Our Photos</span>
   </button>
   <button class="nav-btn" onclick="showPage('game', this)">
     <span class="icon">🎮</span><span class="label">Vzizzle's Game</span>
+  </button>
+  <button class="nav-btn" onclick="showPage('thankyou', this)">
+    <span class="icon">🤍</span><span class="label">A Special Thank You</span>
   </button>
 
   <div class="sidebar-footer">for you, always ♡</div>
@@ -1395,7 +1453,7 @@
 
   <!-- 3x3 GRID -->
   <div id="page-grid" class="page">
-    <h2 class="page-title">My 3×3</h2>
+    <h2 class="page-title">How I See You</h2>
     <p class="page-subtitle">Nine things I love about you</p>
     <div class="grid-intro">
       <p>Every square is a tiny piece of you — hover to reveal what each one means.</p>
@@ -1442,7 +1500,7 @@
 
   <!-- POEM -->
   <div id="page-poem" class="page">
-    <h2 class="page-title">For You</h2>
+    <h2 class="page-title">Poetry</h2>
     <p class="page-subtitle">Written with you in mind</p>
     <div class="poem-container">
 
@@ -1557,17 +1615,17 @@
         shoot the <span id="instrColour" style="color:#fff">—</span> rings!
       </div>
 
-      <!-- Arena: avatar + grid -->
+      <!-- Arena: grid full width, avatar strip below -->
       <div class="game-arena">
-        <!-- Vzizzle avatar photo -->
+        <!-- 8×8 grid — full width -->
+        <div class="game-grid" id="gameGrid"></div>
+        <!-- Vzizzle avatar — circular strip below grid -->
         <div class="avatar-col">
           <img id="avatarSprite" class="avatar-sprite"
                src="photos/vzizzle.jpg"
-               alt="Vzizzle"
-               style="width:160px; height:240px; object-fit:cover; object-position:top; border-radius:20px; border:2px solid rgba(180,127,212,0.5);"/>
+               alt="Vzizzle"/>
+          <span class="avatar-name-tag">Commander Vzizzle</span>
         </div>
-        <!-- 8×8 grid -->
-        <div class="game-grid" id="gameGrid"></div>
       </div>
 
     </div><!-- /game-wrap -->
@@ -1599,6 +1657,28 @@
       <div class="overlay-sub" id="overlaySub">shoot rings that match<br>your colour in 45 seconds<br>each round!</div>
       <div class="overlay-hi" id="overlayHi"></div>
       <button class="pixel-btn" id="overlayBtn" onclick="startGame()">▶ START</button>
+    </div>
+  </div>
+  <!-- THANK YOU -->
+  <div id="page-thankyou" class="page">
+    <div class="thankyou-wrap">
+      <h2 class="page-title" style="text-align:center; margin-bottom: 48px;">A Special Thank You</h2>
+      <div class="thankyou-text">
+        <p class="ty-heading">Thank You</p>
+
+        <p class="ty-body">
+          Thank you<br>
+          &nbsp;for making me laugh and cry<br>
+          &nbsp;in ways I never knew I could.
+        </p>
+
+        <p class="ty-body">
+          Thank you<br>
+          &nbsp;for challenging me<br>
+          &nbsp;in ways only someone<br>
+          &nbsp;I truly want to be better for can.
+        </p>
+      </div>
     </div>
   </div>
 
